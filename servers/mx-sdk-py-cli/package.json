@@ -1,0 +1,17 @@
+{
+  "name": "mx-sdk-py-cli",
+  "version": "0.0.1",
+  "description": "MultiversX Python SDK MCP Server",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.6.1",
+    "axios": "^1.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4"
+  }
+}

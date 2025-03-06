@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "mx-api-service": {
+      "command": "node",
+      "args": [
+        "[HOME]/Documents/xPilot/mcp/servers/mx-api-service/index.js"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "mx-sdk-py-cli": {
+      "command": "node",
+      "args": [
+        "[HOME]/Documents/xPilot/mcp/servers/mx-sdk-py-cli/index.js"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "mx-sdk-rs": {
+      "command": "node",
+      "args": [
+        "[HOME]/Documents/xPilot/mcp/servers/mx-sdk-rs/index.js"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
