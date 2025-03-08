@@ -87,15 +87,17 @@ class MxServer {
                             mimeType: 'text/plain',
                             text: 'Wallets can be created using the "mxpy" cli tool.\
                             The command is: "mxpy wallet new [options]". \
-                            options: --help (show help message) \
+                            options: -h, --help (show help message with all options) \
                             --format FORMAT {raw-mnemonic, keystore-mnemonic, keystore-secret-key, pem} (the required format of the generated wallet file) \
                             --outfile OUTFILE (the required output file name for the generated wallet files) \
-                            [--shard SHARD (the shard in which the address will be generated (random shard if not specified))]. \
+                            --shard SHARD (the shard in which the address will be generated (random shard if not specified)) \
                             Important: If options are not provided, show all available wallet formats as a numbered list and recommend using keystore-secret-key format. \
-                            Ask for the wallet file name if not available. Inform the user to save the menemonic phrase from the command output in a secure location. \
-                            If the chosen format is any keystore-mnemonic or keystore-secret-key, before executing the command, inform the user that they will have to provide a password in the terminal executing the command. \
+                            The wallet file name should be provided, if not known, ask for it. \
+                            Inform to save the menemonic phrase from the command output in a secure location. \
+                            If the chosen format is any keystore-mnemonic or keystore-secret-key, before executing the command, inform that a password must be provided in the terminal executing the command. \
                             Keystore files must have a .json extension, pem files must have a .pem extension, append the correct extension to the outfile name if not provided. \
-                            Do not display mnemonic phrase and do not generate any files with sensitive wallet information.',
+                            Do not display mnemonic phrase and do not generate any files with sensitive wallet information. \
+                            ',
                         },
                     ],
                 };
@@ -108,13 +110,14 @@ class MxServer {
                             mimeType: 'text/plain',
                             text: 'Accounts can be funded using the faucet request using "mxpy" cli tool. \
                             The command is: "mxpy faucet request [options]. \
-                            options: --help (show help message) \
+                            options: -h, --help (show help message with all options) \
                             --keyfile KEYFILE (a .json keyfile, if .pem is not provided) \
-                            [--passfile PASSFILE (a file containing keyfile`s password, if keyfile provided, optional)] \
+                            --passfile PASSFILE (a file containing keyfile`s password, if keyfile provided, optional)] \
                             --pem PEM (the .pem file, if keyfile not provided) \
                             --pem-index PEM_INDEX (the index in the PEM file (default 0)) \
                             --chain CHAIN (the chain identifier, should be known or specified by the user, either "D" for devnet or "T" for testnet). \
-                            The request to the faucet will provide 5 xEGLD on devnet and 30 xEGLD on testnet.',
+                            The request to the faucet will provide 5 xEGLD on devnet and 30 xEGLD on testnet. \
+                            ',
                         },
                     ],
                 };
@@ -127,15 +130,16 @@ class MxServer {
                             mimeType: 'text/plain',
                             text: 'Account information can be queried using "mxpy" cli tool. \
                             The command is: "mxpy account get [options]". \
-                            options: --help (show help message) \
+                            options: -h, --help (show help message with all options) \
                             --address ADDRESS (the address to query, required) \
                             --proxy PROXY (the URL of the proxy, required) \
-                            [--balance (whether to only fetch the balance) \
-                            --nonce (whether to only fetch the nonce) \
-                            --username (whether to only fetch the username)]. \
+                            --balance (whether to only fetch the balance) \
+                            --nonce (whether to only fetch the last nonce) \
+                            --username (whether to only fetch the username) \
                             The ADDRESS of the account has a "erd1" prefix and if not known, it can be found by reading the contents of the wallet file, a .json for keyfiles wallets or .pem for pem wallets). \
                             The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com". If not specified, ask for chain ID. \
-                            // Egld value is expressed as a big integer with 18 decimals (1EGLD=1000000000000000000), for display purposes show also the denominated value.',
+                            Egld value is expressed as a big integer with 18 decimals (1EGLD=1000000000000000000), for display purposes show also the denominated value. \
+                            ',
                         },
                     ],
                 };
@@ -148,26 +152,31 @@ class MxServer {
                             mimeType: 'text/plain',
                             text: 'Transactions can be executed using the "mxpy" cli tool. \
                             The command is: "mxpy tx new [options]". \
-                            options: --help (show help message) \
-                            --keyfile KEYFILE a .json extension keyfile \
-                            --passfile PASSFILE a file containing keyfile`s password \
-                            --recall-nonce to recall the last nonce when creating the transaction \
-                            --receiver RECEIVER the address of the receiver \
-                            --gas-price GAS_PRICE the gas price (default 1000000000) \
-                            --gas-limit GAS_LIMIT the gas limit \
-                            --value VALUE the value of egld to transfer (default 0) \
-                            --data DATA the payload, or memo of the transaction (default empty) \
-                            --chain CHAIN the chain identifier \
-                            --options OPTIONS the transaction options (default 0) \
-                            --token-transfers TOKEN_TRANSFERS [TOKEN_TRANSFERS ...] for ESDT token transfers, as [token, amount] E.g. NFT-123456-0a 1, ESDT-987654 100000000 \
-                            --send to broadcast the transaction \
-                            --simulate whether to simulate the transaction and get an estimation for the real value of the --gas-limiit argument (default False) \
-                            --proxy PROXY the URL of the proxy \
-                            --wait-result signal to wait for the transaction result. \
+                            options: -h, --help (show help message with all options) \
+                            --pem PEM (the PEM file, if keyfile not provided) \
+                            --pem-index PEM_INDEX (the index in the PEM file (default: 0)) \
+                            --keyfile KEYFILE (a .json extension keyfile, if PEM not provided) \
+                            --passfile PASSFILE (a file containing keyfile`s password) \
+                            --sender-username SENDER_USERNAME (the username of the sender) \
+                            --nonce NONCE (the nonce for the transaction if known) \
+                            --recall-nonce (to recall the last nonce if --nonce is not provided) \
+                            --receiver RECEIVER (the address of the receiver) \
+                            --gas-price GAS_PRICE (the gas price (default 1000000000)) \
+                            --gas-limit GAS_LIMIT (the gas limit, start with 50000) \
+                            --value VALUE (the value to transfer (default 0)) \
+                            --chain CHAIN (the chain identifier) \
+                            --options OPTIONS (the transaction options (default 0)) \
+                            --token-transfers TOKEN_TRANSFERS [TOKEN_TRANSFERS ...] (for ESDT token transfers, as [token, amount] E.g. NFT-123456-0a 1, ESDT-987654 100000000) \
+                            --send (to broadcast the transaction, not to be used with --simulate) \
+                            --simulate (to simulate the transaction and also get an estimation for the real value for the --gas-limit argument (default False)) \
+                            --proxy PROXY (the URL of the proxy) \
+                            --wait-result (to wait for the transaction result) \
                             The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com". \
-                            To send a transaction, ALWAYS include the following parameters --recall-nonce, --proxy, --send, --wait-result, --gas-limit (use --simulate to have an estimation and increase by 100000 if not enough gas error encountered). \
-                            The address of the account starts with "erd1" and it is written in the wallet file (.json for keyfile or .pem for pem). \
-                            Transaction details should be displayed using explorer "https://devnet-explorer.multiversx.com/transactions/[tx hash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[tx hash] on testnet, "https://explorer.multiversx.com/transactions/[tx hash] on mainnet".',
+                            If the transaction fails with not enough gas error, use --simulate to have an estimation for the gas limit. \
+                            To send a transaction, ALWAYS include the following parameters --recall-nonce, --proxy, --send, --wait-result, --gas-limit \
+                            The ADDRESS of the account has a "erd1" prefix and if not known, it can be found by reading the contents of the wallet file, a .json for keyfiles wallets or .pem for pem wallets). \
+                            Display the transaction details using the explorer "https://devnet-explorer.multiversx.com/transactions/[txhash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[txhash] on testnet, "https://explorer.multiversx.com/transactions/[txhash] on mainnet". \
+                            ',
                         },
                     ],
                 };
@@ -179,25 +188,35 @@ class MxServer {
                             uri: request.params.uri,
                             mimeType: 'text/plain',
                             text: 'Contracts can be deployed the "mxpy" CLI tool. \
-                            The command is: "mxpy contract deploy \
-                            --bytecode <WASM_FILE_FULL_PATH> \
-                            --keyfile <WALLET_FILE_NAME> \
-                            --passfile <WALLET_PASSWORD_FILE_NAME> \
-                            --chain <CHAIN_ID> \
-                            --proxy <PROXY_ADDRESS> \
-                            --recall-nonce \
-                            --gas-limit 10000000 \
-                            --wait-result \
-                            --send  \
-                            [--arguments <ARGUMENTS>]". \
-                            The chain ID if not known, should be specified by the user, "D" for devnet, "T" for testnet, or "M" for mainnet. \
-                            The bytecode file is [CONTARCT-NAME].wasm and it is found in the "output" folder from the contract folder if the contract is already built. If not, build the cotract first. \
-                            The <WASM_FILE_FULL_PATH> must be the full path of the file. The wallet file name (and the wallet password file name for .json keyfile wallets) if not known, should be specified. \
-                            The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com". \
-                            Read the contract file thet contains the #[multiversx_sc::contract] annotation to determine if the contract has init arguments in the "init" function. If so, ask the user for their values and specify them in the --arguments flag. \
-                            Succesful deployment response should have "status": "success" transaction and a log entry with a "identifier": "SCDeploy" section. \
-                            After initial deployment, the contract can only be upgraded to the same address, deploying again would create a new contract at a new address. \
-                            If necessary to update the the contract after deployment, use the upgrade command.',
+                            The command is: "mxpy contract deploy [options]". \
+                            options: -h, --help (show help message with all options) \
+                            --bytecode BYTECODE (must be the full path of the file {CONTRACT-NAME}.wasm, found in the "output" folder from the contract folder. If the file does not exist, build the contract first.) \
+                            --abi ABI (must be the full path of the file {CONTRACT-NAME}.abi.json and it is found in the "output" folder from the contract folder. If the file does not exist, build the contract first.) \
+                            --pem PEM (the wallet .pem extension file, if keyfile not provided) \
+                            --pem-index PEM_INDEX (the index in the PEM file (default: 0)) \
+                            --keyfile KEYFILE (a .json extension keyfile, if PEM not provided). \
+                            --passfile PASSFILE (a file containing keyfile`s password, if keyfile provided, optional) \
+                            --chain CHAIN (The chain ID if not known, should be specified, "D" for devnet, "T" for testnet, or "M" for mainnet.) \
+                            --proxy PROXY (The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com".) \
+                            --nonce NONCE (the nonce for the transaction if known) \
+                            --recall-nonce (to recall the last nonce if --nonce is not provided) \
+                            --gas-price GAS_PRICE (the gas price (default: 1000000000)) \
+                            --gas-limit GAS_LIMIT (the gas limit, first use --simulate with --gas-limit=600000000 to obtain the real gas limit, and then use that value) \
+                            --options OPTIONS (the transaction options (default: 0)) \
+                            --arguments ARGUMENTS [ARGUMENTS ...] (arguments for the contract transaction, as [number, bech32-address, ascii string, boolean] or hex-encoded. E.g. --arguments 42 0x64 1000 0xabba str:TOK-a1c2ef true erd1[..]) \
+                            --arguments-file ARGUMENTS_FILE (a json file containing the arguments. ONLY if abi file is provided. E.g. [{ "to": "erd1...", "amount": 10000000000 }]) \
+                            --wait-result (to wait for the transaction result) \
+                            --timeout TIMEOUT (max num of seconds to wait for result - only valid if --wait-result is set) \
+                            --send (to broadcast the transaction, not to be used with --simulate) \
+                            --simulate (to simulate the transaction and also get a real estimation for the gas limit argument (default False)) \
+                            Successful deployment response should have a "status": "success" transaction and a log entry with an "identifier": "SCDeploy" section. \
+                            After initial deployment, the contract can only be upgraded to the same address, deploying again would create a new contract instance at a new address. \
+                            If necessary to upgrade the contract after first deployment, use the upgrade command. \
+                            If the transaction fails with not enough gas error, use --simulate to have an estimation for the gas limit. \
+                            Always include for the deployment the --recall-nonce, --proxy, --send, --wait-result, --gas-limit flags. \
+                            Display the transaction details using the explorer "https://devnet-explorer.multiversx.com/transactions/[txhash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[txhash] on testnet, "https://explorer.multiversx.com/transactions/[txhash] on mainnet". \
+                            Important: Before deployment, read the contract file thet contains the #[multiversx_sc::contract] annotation to determine if the contract has init arguments in the "init" function. If so, ask the user for their values and specify them in the --arguments flag. \
+                            ',
                         },
                     ],
                 };
@@ -209,24 +228,32 @@ class MxServer {
                             uri: request.params.uri,
                             mimeType: 'text/plain',
                             text: 'Contracts can be upgraded using the "mxpy" CLI tool. \
-                            The command is: "mxpy contract upgrade \
-                            --bytecode <WASM_FILE_FULL_PATH> \
-                            --keyfile <WALLET_FILE_NAME> \
-                            --passfile <WALLET_PASSWORD_FILE_NAME> \
-                            --chain <CHAIN_ID> \
-                            --proxy <PROXY_ADDRESS> \
-                            --recall-nonce \
-                            --gas-limit 10000000 \
-                            --wait-result \
-                            --send  \
-                            [--arguments <ARGUMENTS>]". \
-                            The chain ID if not known, should be specified by the user, either "D" for devnet, "T" for testnet, or "M" for mainnet. Default "D". \
-                            The bytecode file is [CONTARCT-NAME].wasm and it is found in the "output" folder from the contract folder. \
-                            The <WASM_FILE_FULL_PATH> must be the full path of the file. \
-                            The wallet file name and wallet password file name if not known, should be provided by the user. \
-                            The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com". \
-                            Read the contract file thet contains the #[multiversx_sc::contract] annotation to determine if the contract has init arguments in the "init" function or the "upgrade" function. If so, ask the user for their values and specify them in the --arguments flag. \
-                            Succesful upgrade response should have "status": "success" transaction and a log entry with a "identifier": "SCUpgrade" section. Always include the --recall-nonce, --proxy, --send, --wait-result, --gas-limit flags.',
+                            The command is: "mxpy contract upgrade CONTRACT_ADDRESS [options] \
+                            options: -h, --help (show help message with all options) \
+                            --bytecode BYTECODE (must be the full path of the file {CONTRACT-NAME}.wasm, found in the "output" folder from the contract folder. If the file does not exist or the build is old, use the mx-sdk-rs://building-contracts resource and build the contract first.) \
+                            --abi ABI (must be the full path of the file {CONTRACT-NAME}.abi.json and it is found in the "output" folder from the contract folder.) \
+                            --pem PEM (the wallet .pem extension file, if keyfile not provided) \
+                            --pem-index PEM_INDEX (the index in the PEM file (default: 0)) \
+                            --keyfile KEYFILE (the wallet file name for .json keyfile wallets.) \
+                            --passfile PASSFILE (a file containing keyfile`s password, if keyfile provided, optional) \
+                            --chain CHAIN (The chain ID if not known, should be specified, "D" for devnet, "T" for testnet, or "M" for mainnet.) \
+                            --proxy PROXY (The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com".) \
+                            --nonce NONCE (the nonce for the transaction if known) \
+                            --recall-nonce (to recall the last nonce if --nonce is not provided) \
+                            --gas-price GAS_PRICE (the gas price (default: 1000000000)) \
+                            --gas-limit GAS_LIMIT (the gas limit, first use --simulate with --gas-limit=600000000 to obtain the real gas limit, and then use that value) \
+                            --options OPTIONS (the transaction options (default: 0)) \
+                            --arguments ARGUMENTS [ARGUMENTS ...] (arguments for the contract transaction, as [number, bech32-address, ascii string, boolean] or hex-encoded. E.g. --arguments 42 0x64 1000 0xabba str:TOK-a1c2ef true erd1[..]) \
+                            --arguments-file ARGUMENTS_FILE (a json file containing the arguments. ONLY if abi file is provided. E.g. [{ "to": "erd1...", "amount": 10000000000 }]) \
+                            --wait-result (to wait for the transaction result) \
+                            --timeout TIMEOUT (max num of seconds to wait for result - only valid if --wait-result is set) \
+                            --send (to broadcast the transaction, not to be used with --simulate) \
+                            --simulate (to simulate the transaction and also get a real estimation for the gas limit argument (default False)) \
+                            Before upgrading, read the contract file that contains the #[multiversx_sc::contract] annotation to determine if the contract has init arguments in the "init" function. If so, ask the user for their values and specify them in the --arguments flag. \
+                            Successful upgrade response should have a "status": "success" transaction and a log entry with an "identifier": "SCUpgrade" section. \
+                            If the transaction fails with not enough gas error, use --simulate to have an estimation for the gas limit. \
+                            Always include for the upgrade the --recall-nonce, --proxy, --send, --wait-result, --gas-limit flags. \
+                            Display the transaction details using the explorer "https://devnet-explorer.multiversx.com/transactions/[txhash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[txhash] on testnet, "https://explorer.multiversx.com/transactions/[txhash] on mainnet".',
                         },
                     ],
                 };
@@ -238,27 +265,35 @@ class MxServer {
                             uri: request.params.uri,
                             mimeType: 'text/plain',
                             text: 'Contract endpoint functions can be called using the "mxpy" CLI tool. \
-                            The command is: "mxpy contract call <CONTRACT_ADDRESS> \
-                            --abi <ABI_FILE_FULL_PATH> \
-                            --function <FUNCTION_NAME> \
-                            --keyfile <WALLET_FILE_NAME> \
-                            --passfile <WALLET_PASSWORD_FILE_NAME> \
-                            --chain <CHAIN_ID> \
-                            --proxy <PROXY_ADDRESS> \
-                            --recall-nonce \
-                            --gas-limit 10000000 \
-                            --wait-result \
-                            --send \
-                            [--value <EGLD_VALUE>] \
-                            [--arguments <ARGUMENTS>]". \
-                            The chain ID if not known, should be specified by the user, either "D" for devnet, "T" for testnet, or "M" for mainnet. \
-                            The abi file is [CONTARCT-NAME].abi.json and it is found in the "output" folder from the contract folder. \
-                            The <ABI_FILE_FULL_PATH> must be the full path of the file. \
-                            The wallet file name and wallet password file name if not known, should be provided by the user. \
-                            The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com". \
+                            The command is: "mxpy contract call CONTRACT_ADDRESS [options] \
+                            options: -h, --help (show help message with all options) \
+                            --abi ABI (must be the full path of the file {CONTRACT-NAME}.abi.json and it is found in the "output" folder from the contract folder.) \
+                            --pem PEM (the .pem extension file, if keyfile not provided) \
+                            --pem-index PEM_INDEX (the index in the PEM file (default: 0)) \
+                            --keyfile KEYFILE (a .json extension keyfile, if PEM not provided) \
+                            --passfile PASSFILE (a file containing keyfile`s password, if keyfile provided) (optional) \
+                            --proxy PROXY (The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com".) \
+                            --nonce NONCE (the nonce for the transaction if known) \
+                            --recall-nonce (to recall the last nonce if --nonce is not provided) \
+                            --gas-price GAS_PRICE (the gas price (default: 1000000000)) \
+                            --gas-limit GAS_LIMIT (the gas limit, start with 2000000) \
+                            --value VALUE (the value to transfer (default: 0)) \
+                            --options OPTIONS (the transaction options (default: 0)) \
+                            --chain CHAIN (The chain ID if not known, should be specified, "D" for devnet, "T" for testnet, or "M" for mainnet.) \
+                            --function FUNCTION (the function to call) \
+                            --arguments ARGUMENTS [ARGUMENTS ...] (arguments for the contract transaction, as [number, bech32-address, ascii string, boolean] or hex-encoded. E.g. --arguments 42 0x64 1000 0xabba str:TOK-a1c2ef true erd1[..]) \
+                            --arguments-file ARGUMENTS_FILE (a json file containing the arguments. ONLY if abi file is provided. E.g. [{ "  to": "erd1...", "amount": 10000000000 }]) \
+                            --token-transfers TOKEN_TRANSFERS [TOKEN_TRANSFERS ...] (token transfers for transfer & execute, as [token, amount] E.g. --token-transfers NFT-123456-0a 1 ESDT-987654 100000000) \
+                            --wait-result (to wait for the transaction result) \
+                            --timeout TIMEOUT (max num of seconds to wait for result - only valid if --wait-result is set) \
+                            --send (to broadcast the transaction, not to be used with --simulate) \
+                            --simulate (to simulate the transaction (default False)) \
+                            The wallet file name and wallet password file name if not known, should be provided. \
                             The arguments flag is optional and should be specified by the user, if none is specified do not include the --arguments flag. \
                             The value flag is optional and specifies any EGLD transfer to the contract call. \
-                            Always include the --recall-nonce, --proxy, --send, --wait-result, --gas-limit flags.',
+                            Always include for the execution call the --recall-nonce, --proxy, --send, --wait-result, --gas-limit flags.\
+                            In case of "not enough gas" error, use --simulate with --gas-limit increase by 2X, until the "simulation" section has a "status": "success" result, not "status": "pending". Then use the success value for the --gas-limit flag. \
+                            Display the transaction details using the explorer "https://devnet-explorer.multiversx.com/transactions/[txhash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[txhash] on testnet, "https://explorer.multiversx.com/transactions/[txhash] on mainnet".',
                       },
                   ],
               };
@@ -270,13 +305,10 @@ class MxServer {
                             uri: request.params.uri,
                             mimeType: 'text/plain',
                             text: 'Contracts view functions can be queried using the "mxpy" CLI tool. \
-                            The command is: "mxpy contract query <CONTRACT_ADDRESS> \
-                            --abi <ABI_FILE_FULL_PATH> \
-                            --function <FUNCTION_NAME> \
-                            --proxy <PROXY_ADDRESS>". \
-                            The abi file is [CONTARCT-NAME].abi.json and it is found in the "output" folder from the contract folder. \
-                            The <ABI_FILE_FULL_PATH> must be the full path of the file. \
-                            The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com". \
+                            The command is: "mxpy contract query CONTRACT_ADDRESS \
+                            --abi ABI (must be the full path of the file {CONTRACT-NAME}.abi.json and it is found in the "output" folder from the contract folder.) \
+                            --function FUNCTION (the function to call) \
+                            --proxy PROXY (The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com".)" \
                             If the query result values are expressed as hexadecimal, show them also in decimal',
                       },
                   ],

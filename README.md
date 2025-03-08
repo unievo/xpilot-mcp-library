@@ -2,13 +2,13 @@
 
 The [Model Context Protocol](https://modelcontextprotocol.io) is an open protocol that standardizes how applications provide context to LLMs. xPilot uses MCP servers to provide necessary context to the underlying model and add new tools and resources the model can use to complete tasks and requests.
 
-This repository contains MCP servers implementations for xPilot. 
+This repository contains MCP servers implementations for xPilot.
 
 **NOTE:** *Right now this is just an initial release containing limited functionality. Feel free to contribute in extending them or provide new implementations for other use cases by opening a Pull request.*
 
 ## Repo Structure
 
-```
+```bash
 /
 ├── servers/                     # Server implementations
 └── mcp_settings.json.example    # Example configuration file for xPilot
@@ -17,6 +17,7 @@ This repository contains MCP servers implementations for xPilot.
 ## Getting Started
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/en/download/) for running the servers
 - [Python](https://www.python.org/downloads/) for the SDK CLI tools
 - [Rust](https://docs.multiversx.com/sdk-and-tools/troubleshooting/rust-setup) for the Rust SDK CLI
@@ -26,12 +27,14 @@ This repository contains MCP servers implementations for xPilot.
 ### Installation
 
 1. Clone the repository (xPilot uses this default path: `[HOME]/Documents/xPilot/mcp`):
+
    ```bash
    cd [HOME]/Documents/xPilot/mcp
    git clone https://github.com/unievo/xpilot-mcp-library.git
    ```
 
 2. Install dependencies using the following command in each server's directory:
+
    ```bash
    cd [HOME]/Documents/xPilot/mcp/servers/{server_name}
    npm install
@@ -41,9 +44,7 @@ This repository contains MCP servers implementations for xPilot.
 
    ![mcp_settings](/docs/img/configure_mcp_servers.png)
 
-   
    The **Configure MCP Servers** button will open xPilot's `mcp_settings.json` configuration file. You can copy and paste the contents of the [mcp_settings.json.example](mcp_settings.json.example) file into xPilot's configuration file.
-
 
    [**Important**]: Make sure to update the paths to the server files in the configuration file so node can run them.
    Replace `[HOME]` with the actual path to your home directory.
@@ -60,7 +61,7 @@ This repository contains MCP servers implementations for xPilot.
    C:\Users\{username}\Documents\xPilot\mcp\servers\mx-api-service\index.js
    ```
 
-   xPilot monitors the cofiguration file for changes and will automatically update the servers when the configuration is updated.
+   xPilot monitors the configuration file for changes and will automatically update the servers when the configuration is updated.
 
 ## Available MCP Servers
 
@@ -68,9 +69,7 @@ The implementation includes the following servers:
 
 1. **[MultiversX API Service](/servers/mx-api-service)**: Implementation handling MultiversX API service requests and responses
 2. **[MultiversX Python SDK CLI](/servers/mx-sdk-py-cli)**: Resources explaining CLI tools implemented in Python (mxpy)
-3. **[MultiversX Rust SDK](/servers/mx-sdk-rs)**: Resources explaining the Rust SDK CLI tools (sc-meta)
-
-
+3. **[MultiversX Rust SDK CLI](/servers/mx-sdk-rs)**: Resources explaining the Rust SDK CLI tools (sc-meta)
 
 ## Configuration
 
@@ -94,11 +93,10 @@ The `mcp_settings.json` file contains server configurations for each server. The
 ### Configuration Options
 
 - `command`: The command to run the server (e.g., `node`)
-- `args`: The path to the server file
+- `args`: Arguments to pass to the command
 - `env`: Environment variables for the server (API keys, etc.)
 - `disabled`: Boolean flag to enable/disable the server
 - `autoApprove`: List of auto-approved actions
-
 
 ## Contributing
 

@@ -56,11 +56,12 @@ class MxServer {
                             mimeType: 'text/plain',
                             text: 'Contracts are created using the "sc-meta" cli tool. \
                             The command is: "sc-meta new \
-                            --name <CONTRACT_NAME> \
-                            --template <TEMPLATE_NAME>". \
+                            --name CONTRACT_NAME \
+                            --template TEMPLATE_NAME". \
                             If a contract name is not known, ask the user for the name. \
+                            Available templates can be listed by executing "sc-meta templates" \
                             If the template name is still not provided, use the default template name "empty". \
-                            Valid template names are empty, adder, ping-pong-egld, crypto-zombies',
+                            ',
                         },
                     ],
                 };
