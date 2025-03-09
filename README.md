@@ -1,22 +1,23 @@
 # xPilot MCP Server Library
 
-The [Model Context Protocol](https://modelcontextprotocol.io) is an open protocol that standardizes how applications provide context to LLMs. xPilot uses MCP servers to provide necessary context to the underlying model and add new tools and resources the model can use to complete tasks and requests.
-
-This repository contains MCP servers implementations for xPilot.
-
-**NOTE:** *Right now this is just an initial release containing limited functionality. Feel free to contribute in extending them or provide new implementations for other use cases by opening a Pull request.*
+The [Model Context Protocol](https://modelcontextprotocol.io) is an open protocol that standardizes how applications provide context to LLMs. xPilot can use MCP servers to provide context to the underlying model and add new tools and resources the model can use to complete tasks and requests.
 
 ## Repo Structure
 
 ```bash
 /
 ├── servers/                     # Server implementations
+├── templates/                   # Server templates
 └── mcp_settings.json.example    # Example configuration file for xPilot
 ```
 
+This repository contains MCP Server implementations for xPilot in the [servers](/servers) directory.
+
+**NOTE:** *The initial release contains limited functionality. Feel free to contribute in extending them or creating new implementations for other use cases by starting from one of the available [templates](/templates).*
+
 ## Getting Started
 
-### Prerequisites
+### Prerequisites for server use
 
 - [Node.js](https://nodejs.org/en/download/) for running the servers
 - [Python](https://www.python.org/downloads/) for the SDK CLI tools
