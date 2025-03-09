@@ -2,11 +2,12 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { 
-    ErrorCode, 
-    ListResourcesRequestSchema, 
-    McpError, 
+    ListResourcesRequestSchema,
     ReadResourceRequestSchema, 
+    McpError, 
+    ErrorCode,
 } from '@modelcontextprotocol/sdk/types.js';
+
 class MxServer {
     constructor() {
         this.server = new Server({
@@ -17,13 +18,16 @@ class MxServer {
                 resources: {},
             },
         });
+
         this.setupResourceHandlers();
+
         this.server.onerror = (error) => console.error('[MCP Error]', error);
         process.on('SIGINT', async () => {
             await this.server.close();
             process.exit(0);
         });
     }
+
     setupResourceHandlers() {
         this.server.setRequestHandler(ListResourcesRequestSchema, async () => ({
             resources: [
@@ -322,7 +326,7 @@ class MxServer {
     async run() {
         const transport = new StdioServerTransport();
         await this.server.connect(transport);
-        console.log('MCP server running on stdio');
+        console.error('MCP server running on stdio');
     }
 }
 const server = new MxServer();
