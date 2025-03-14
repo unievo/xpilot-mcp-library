@@ -166,17 +166,17 @@ class MxServer {
                             --recall-nonce (to recall the last nonce if --nonce is not provided) \
                             --receiver RECEIVER (the address of the receiver) \
                             --gas-price GAS_PRICE (the gas price (default 1000000000)) \
-                            --gas-limit GAS_LIMIT (the gas limit, start with 50000) \
+                            --gas-limit GAS_LIMIT (start with 50000 for simple transfer transactions, or use --simulate with --gas-limit=600000000 to obtain an estimation of the gas limit for more complex transactions, and then use that value) \
                             --value VALUE (the value to transfer (default 0)) \
                             --chain CHAIN (the chain identifier) \
                             --options OPTIONS (the transaction options (default 0)) \
                             --token-transfers TOKEN_TRANSFERS [TOKEN_TRANSFERS ...] (for ESDT token transfers, as [token, amount] E.g. NFT-123456-0a 1, ESDT-987654 100000000) \
                             --send (to broadcast the transaction, not to be used with --simulate) \
-                            --simulate (to simulate the transaction and also get an estimation for the real value for the --gas-limit argument (default False)) \
+                            --simulate (to simulate the transaction and also get an estimation for the --gas-limit argument (look for "txGasUnits": in the simulation result) (default False)) \
                             --proxy PROXY (the URL of the proxy) \
                             --wait-result (to wait for the transaction result) \
                             The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com". \
-                            If the transaction fails with not enough gas error, use --simulate to have an estimation for the gas limit. \
+                            If the transaction fails with not enough gas error, and already used --simulate to have an estimation for the gas limit, use a 2X on the last used gas limit. \
                             To send a transaction, ALWAYS include the following parameters --recall-nonce, --proxy, --send, --wait-result, --gas-limit \
                             The ADDRESS of the account has a "erd1" prefix and if not known, it can be found by reading the contents of the wallet file, a .json for keyfiles wallets or .pem for pem wallets). \
                             Display the transaction details using the explorer "https://devnet-explorer.multiversx.com/transactions/[txhash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[txhash] on testnet, "https://explorer.multiversx.com/transactions/[txhash] on mainnet". \
@@ -203,20 +203,20 @@ class MxServer {
                             --chain CHAIN (The chain ID if not known, should be specified, "D" for devnet, "T" for testnet, or "M" for mainnet.) \
                             --proxy PROXY (The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com".) \
                             --nonce NONCE (the nonce for the transaction if known) \
-                            --recall-nonce (to recall the last nonce if --nonce is not provided) \
+                            --recall-nonce (always use to recall the last nonce if --nonce is not provided) \
                             --gas-price GAS_PRICE (the gas price (default: 1000000000)) \
-                            --gas-limit GAS_LIMIT (the gas limit, first use --simulate with --gas-limit=600000000 to obtain the real gas limit, and then use that value) \
+                            --gas-limit GAS_LIMIT (use --simulate with --gas-limit=600000000 to obtain an estimation of the gas limit, and then use that value) \
                             --options OPTIONS (the transaction options (default: 0)) \
                             --arguments ARGUMENTS [ARGUMENTS ...] (arguments for the contract transaction, as [number, bech32-address, ascii string, boolean] or hex-encoded. E.g. --arguments 42 0x64 1000 0xabba str:TOK-a1c2ef true erd1[..]) \
                             --arguments-file ARGUMENTS_FILE (a json file containing the arguments. ONLY if abi file is provided. E.g. [{ "to": "erd1...", "amount": 10000000000 }]) \
                             --wait-result (to wait for the transaction result) \
                             --timeout TIMEOUT (max num of seconds to wait for result - only valid if --wait-result is set) \
                             --send (to broadcast the transaction, not to be used with --simulate) \
-                            --simulate (to simulate the transaction and also get a real estimation for the gas limit argument (default False)) \
+                            --simulate (to simulate the transaction and also get an estimation for the gas limit argument (look for "txGasUnits": in the simulation result) (default False)) \
                             Successful deployment response should have a "status": "success" transaction and a log entry with an "identifier": "SCDeploy" section. \
                             After initial deployment, the contract can only be upgraded to the same address, deploying again would create a new contract instance at a new address. \
                             If necessary to upgrade the contract after first deployment, use the upgrade command. \
-                            If the transaction fails with not enough gas error, use --simulate to have an estimation for the gas limit. \
+                            If the transaction fails with not enough gas error, and already used --simulate to have an estimation for the gas limit, use a 2X on the last used gas limit. \
                             Always include for the deployment the --recall-nonce, --proxy, --send, --wait-result, --gas-limit flags. \
                             Display the transaction details using the explorer "https://devnet-explorer.multiversx.com/transactions/[txhash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[txhash] on testnet, "https://explorer.multiversx.com/transactions/[txhash] on mainnet". \
                             Important: Before deployment, read the contract file thet contains the #[multiversx_sc::contract] annotation to determine if the contract has init arguments in the "init" function. If so, ask the user for their values and specify them in the --arguments flag. \
@@ -243,19 +243,19 @@ class MxServer {
                             --chain CHAIN (The chain ID if not known, should be specified, "D" for devnet, "T" for testnet, or "M" for mainnet.) \
                             --proxy PROXY (The proxy is dependent on chain ID, for D:"https://devnet-gateway.multiversx.com", for T:"https://testnet-gateway.multiversx.com", for M:"https://gateway.multiversx.com".) \
                             --nonce NONCE (the nonce for the transaction if known) \
-                            --recall-nonce (to recall the last nonce if --nonce is not provided) \
+                            --recall-nonce (always use to recall the last nonce if --nonce is not provided) \
                             --gas-price GAS_PRICE (the gas price (default: 1000000000)) \
-                            --gas-limit GAS_LIMIT (the gas limit, first use --simulate with --gas-limit=600000000 to obtain the real gas limit, and then use that value) \
+                            --gas-limit GAS_LIMIT (use --simulate with --gas-limit=600000000 to obtain an estimation of the gas limit, and then use that value) \
                             --options OPTIONS (the transaction options (default: 0)) \
                             --arguments ARGUMENTS [ARGUMENTS ...] (arguments for the contract transaction, as [number, bech32-address, ascii string, boolean] or hex-encoded. E.g. --arguments 42 0x64 1000 0xabba str:TOK-a1c2ef true erd1[..]) \
                             --arguments-file ARGUMENTS_FILE (a json file containing the arguments. ONLY if abi file is provided. E.g. [{ "to": "erd1...", "amount": 10000000000 }]) \
                             --wait-result (to wait for the transaction result) \
                             --timeout TIMEOUT (max num of seconds to wait for result - only valid if --wait-result is set) \
                             --send (to broadcast the transaction, not to be used with --simulate) \
-                            --simulate (to simulate the transaction and also get a real estimation for the gas limit argument (default False)) \
+                            --simulate (to simulate the transaction and also get an estimation for the --gas-limit argument (look for "txGasUnits": in the simulation result) (default False)) \
                             Before upgrading, read the contract file that contains the #[multiversx_sc::contract] annotation to determine if the contract has init arguments in the "init" function. If so, ask the user for their values and specify them in the --arguments flag. \
                             Successful upgrade response should have a "status": "success" transaction and a log entry with an "identifier": "SCUpgrade" section. \
-                            If the transaction fails with not enough gas error, use --simulate to have an estimation for the gas limit. \
+                            If the transaction fails with not enough gas error, and already used --simulate to have an estimation for the gas limit, use a 2X on the last used gas limit. \
                             Always include for the upgrade the --recall-nonce, --proxy, --send, --wait-result, --gas-limit flags. \
                             Display the transaction details using the explorer "https://devnet-explorer.multiversx.com/transactions/[txhash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[txhash] on testnet, "https://explorer.multiversx.com/transactions/[txhash] on mainnet".',
                         },
@@ -280,7 +280,7 @@ class MxServer {
                             --nonce NONCE (the nonce for the transaction if known) \
                             --recall-nonce (to recall the last nonce if --nonce is not provided) \
                             --gas-price GAS_PRICE (the gas price (default: 1000000000)) \
-                            --gas-limit GAS_LIMIT (the gas limit, start with 2000000) \
+                            --gas-limit GAS_LIMIT (use --simulate with --gas-limit=600000000 to obtain an estimation of the gas limit, and then use that value) \
                             --value VALUE (the value to transfer (default: 0)) \
                             --options OPTIONS (the transaction options (default: 0)) \
                             --chain CHAIN (The chain ID if not known, should be specified, "D" for devnet, "T" for testnet, or "M" for mainnet.) \
@@ -291,12 +291,12 @@ class MxServer {
                             --wait-result (to wait for the transaction result) \
                             --timeout TIMEOUT (max num of seconds to wait for result - only valid if --wait-result is set) \
                             --send (to broadcast the transaction, not to be used with --simulate) \
-                            --simulate (to simulate the transaction (default False)) \
+                            --simulate (to simulate the transaction and also get an estimation for the --gas-limit argument (look for "txGasUnits": in the simulation result) (default False)) \
                             The wallet file name and wallet password file name if not known, should be provided. \
                             The arguments flag is optional and should be specified by the user, if none is specified do not include the --arguments flag. \
                             The value flag is optional and specifies any EGLD transfer to the contract call. \
                             Always include for the execution call the --recall-nonce, --proxy, --send, --wait-result, --gas-limit flags.\
-                            In case of "not enough gas" error, use --simulate with --gas-limit increase by 2X, until the "simulation" section has a "status": "success" result, not "status": "pending". Then use the success value for the --gas-limit flag. \
+                            If the transaction fails with not enough gas error, and already used --simulate to have an estimation for the gas limit, use a 2X on the last used gas limit. \
                             Display the transaction details using the explorer "https://devnet-explorer.multiversx.com/transactions/[txhash] on devnet, "https://testnet-explorer.multiversx.com/transactions/[txhash] on testnet, "https://explorer.multiversx.com/transactions/[txhash] on mainnet".',
                       },
                   ],
